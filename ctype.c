@@ -1,3 +1,9 @@
+/*
+    Coded by ArTic/JhoPro
+
+    Handle characters functions
+*/
+
 #include "ctype.h"
 
 int isalpha(int c) 
