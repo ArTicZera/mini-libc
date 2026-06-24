@@ -1,3 +1,9 @@
+/*
+    Coded by ArTic/JhoPro
+
+    Happens when an Assertion fails
+*/
+
 #include "stdio.h"
 #include "unistd.h"
 
