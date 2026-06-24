@@ -1,3 +1,7 @@
+/*
+    Coded by ArTic/JhoPro and br-c.org
+*/
+
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdarg.h"
@@ -72,7 +76,6 @@ static void print_int(FILE *f, int n)
     }
 }
 
-/* imprime hexadecimal */
 static void print_hex(FILE *f, unsigned int n) 
 {
     char buf[16];
@@ -259,67 +262,14 @@ int fclose(FILE *f)
 
 int snprintf(char *buf, size_t n, const char *fmt, ...) 
 {
-    va_list args;
-    va_start(args, fmt);
+    va_list ap;
+    int ret;
 
-    char *start = buf;
-    size_t left = n;
+    va_start(ap, fmt);
+    ret = vsnprintf(buf, n, fmt, ap);
+    va_end(ap);
 
-    if (n == 0)
-    {
-        return 0;
-    }
-
-    for (int i = 0; fmt[i]; i++) 
-    {
-        if (fmt[i] == '%') 
-        {
-            i++;
-            switch (fmt[i]) 
-            {
-
-                case 'd': 
-                {
-                    int v = va_arg(args, int);
-                    putint_buf(&buf, &left, v);
-                    break;
-                }
-
-                case 's': 
-                {
-                    char *s = va_arg(args, char*);
-                    puts_buf(&buf, &left, s);
-                    break;
-                }
-
-                case 'c': 
-                {
-                    char c = (char)va_arg(args, int);
-                    putc_buf(&buf, &left, c);
-                    break;
-                }
-
-                case '%': 
-                {
-                    putc_buf(&buf, &left, '%');
-                    break;
-                }
-
-                default:
-                    break;
-            }
-        } 
-        else 
-        {
-            putc_buf(&buf, &left, fmt[i]);
-        }
-    }
-
-    *buf = '\0';
-
-    va_end(args);
-
-    return (int)(buf - start);
+    return ret;
 }
 
 long fseek(FILE *f, long offset, int whence)
@@ -349,7 +299,6 @@ long fseek(FILE *f, long offset, int whence)
             return -1;
     }
 
-    /* sincroniza com kernel */
     long res = lseek(f->fd, new_pos, SEEK_SET);
 
     if (res < 0)
@@ -372,49 +321,94 @@ int vsnprintf(char *buf, size_t n, const char *fmt, va_list args)
     size_t left = n;
 
     if (n == 0)
-    {
         return 0;
-    }
 
-    for (int i = 0; fmt[i]; i++)
+    for (int i = 0; fmt[i] && left > 1; i++)
     {
         if (fmt[i] == '%')
         {
             i++;
+
+            if (!fmt[i])
+                break;
+
             switch (fmt[i])
             {
                 case 'd':
                 {
                     int v = va_arg(args, int);
+
+                    char tmp[32];
+                    int t = 0;
+
+                    if (v == 0)
+                    {
+                        *buf++ = '0';
+                        left--;
+                        break;
+                    }
+
+                    if (v < 0)
+                    {
+                        *buf++ = '-';
+                        left--;
+                        v = -v;
+                    }
+
+                    while (v > 0 && t < 32)
+                    {
+                        tmp[t++] = '0' + (v % 10);
+                        v /= 10;
+                    }
+
+                    while (t-- && left > 1)
+                    {
+                        *buf++ = tmp[t];
+                        left--;
+                    }
                     break;
                 }
 
                 case 's':
                 {
                     char *s = va_arg(args, char*);
+                    while (*s && left > 1)
+                    {
+                        *buf++ = *s++;
+                        left--;
+                    }
                     break;
                 }
 
                 case 'c':
                 {
                     char c = (char)va_arg(args, int);
+                    *buf++ = c;
+                    left--;
                     break;
                 }
 
                 case '%':
+                    *buf++ = '%';
+                    left--;
                     break;
 
                 default:
+                    *buf++ = '%';
+                    *buf++ = fmt[i];
+                    left -= 2;
                     break;
             }
         }
         else
         {
-            //blank
+            *buf++ = fmt[i];
+            left--;
         }
     }
 
     *buf = '\0';
+
     return (int)(buf - start);
 }
 
