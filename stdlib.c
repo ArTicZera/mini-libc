@@ -173,14 +173,12 @@ int atoi(const char *s)
     int sign = 1;
     int result = 0;
 
-    // pular espaços
     while (*s == ' ' || *s == '\t' || *s == '\n' ||
            *s == '\r' || *s == '\v' || *s == '\f')
     {
         s++;
     }
 
-    // sinal
     if (*s == '-')
     {
         sign = -1;
@@ -191,7 +189,6 @@ int atoi(const char *s)
         s++;
     }
 
-    // números
     while (*s >= '0' && *s <= '9')
     {
         result = result * 10 + (*s - '0');
@@ -208,12 +205,10 @@ double atof(const char *s)
     double div = 1.0;
     int sign = 1;
 
-    /* pula espaços */
     while (*s == ' ' || *s == '\t' || *s == '\n' ||
            *s == '\r' || *s == '\v' || *s == '\f')
         s++;
 
-    /* sinal */
     if (*s == '-')
     {
         sign = -1;
@@ -224,14 +219,12 @@ double atof(const char *s)
         s++;
     }
 
-    /* parte inteira */
     while (*s >= '0' && *s <= '9')
     {
         result = result * 10.0 + (*s - '0');
         s++;
     }
 
-    /* parte decimal */
     if (*s == '.')
     {
         s++;
