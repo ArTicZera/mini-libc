@@ -1,3 +1,9 @@
+/*
+    Coded by ArTic/JhoPro (1yago)
+
+    Leads strings and memory blocks
+*/
+
 #include "string.h"
 #include "stdlib.h"
 #include "ctype.h"
