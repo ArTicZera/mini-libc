@@ -1,10 +1,8 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-/* variável global de erro */
 extern int errno;
 
-/* erros básicos suficientes pra libc + Doom */
 #define EPERM        1
 #define ENOENT       2
 #define EINTR        4
