@@ -1,3 +1,9 @@
+/*
+    Coded by ArTic/JhoPro
+
+    Resources: Linux syscalls
+*/
+
 #include "unistd.h"
 
 void *sbrk(int increment)
@@ -68,7 +74,6 @@ int lseek(int fd, int offset, int whence)
     return ret;
 }
 
-/* exit simples */
 void exit(int status)
 {
     asm volatile (
