@@ -1,5 +1,7 @@
 /*
     Coded by ArTic/JhoPro and br-c.org
+
+    Standard library header for input and output (I/O)
 */
 
 #include "stdio.h"
