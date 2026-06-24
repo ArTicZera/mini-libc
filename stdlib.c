@@ -1,4 +1,9 @@
-/* From CrowOS */
+/*
+  Coded by ArTic/JhoPro and CrowOS
+
+  Includes many general-purpose functions.
+  Refactored by ArTic/JhoPro
+*/
 
 #include "stdlib.h"
 #include "string.h"
