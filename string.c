@@ -1,5 +1,5 @@
 /*
-    Coded by ArTic/JhoPro (1yago)
+    Coded by ArTic/JhoPro and IBM (1yago)
 
     Leads strings and memory blocks
 */
