@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 
+/* Memory Calls */
 void *malloc(size_t nbytes);
 void free(void *ap);
 void *calloc(size_t nmemb, size_t size);
